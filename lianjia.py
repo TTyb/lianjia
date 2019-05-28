@@ -78,12 +78,11 @@ def getHtmlMain(city, channel, pages, top):
     print("第二次访问：获取城市编码", "：", url_get_city)
     html_set_cookie, html_city = getHtml(url_get_city)
     cityDict = getCity(html_city)
-    url_city = url_ori + cityDict[city]
+    url_city = cityDict[city]
     print("第三次访问：访问获取导航", "：", url_city)
     html_set_cookie, html_city_content = getHtml(url_city, _cookie=html_set_cookie)
     channelDict = getChannel(html_city_content)
-    print(channelDict)
-    url_channel = url_ori + channelDict[channel]
+    url_channel = channelDict[channel]
     html_set_cookie, html_houses_content = getHtml(url_channel, _cookie=html_set_cookie)
     print("第四次访问：获取房子信息", "：", url_channel)
     allList = []
@@ -101,11 +100,11 @@ def getHtmlMain(city, channel, pages, top):
     pd.set_option('display.width', 1000)
     pd.set_option('max_colwidth', 1000)
     print(resultHouse)
-
+    resultHouse.to_csv("price_area.csv",index=False,encoding="utf-8")
 
 if __name__ == "__main__":
     city = "广州"
-    channel = "新房"
-    pages = 8
-    top = 20
+    channel = "二手房"
+    pages = 5
+    top = 200
     getHtmlMain(city, channel, pages, top)
